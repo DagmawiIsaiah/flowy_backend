@@ -2,3 +2,4 @@
 #python-dotenv
 #sqlAlchemy
 #pymysql
+#cryptography
