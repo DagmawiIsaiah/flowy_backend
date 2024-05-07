@@ -5,60 +5,63 @@ from .database import Base
 
 
 class User(Base):
-    __tablename__ = "user"
+    __tablename__ = "users"
 
     id = Column(
         Integer, index=True, autoincrement=True, primary_key=True, nullable=False
     )
     f_name = Column(String(50), nullable=False)
     l_name = Column(String(50), nullable=False)
-    balance = Column(Double, nullable=False)
-    flowy_account_number = Column(Integer, nullable=False)
-    phone_number = Column(String(150), unique=True, nullable=False)
-    password = Column(String(10), nullable=False)
+    balance = Column(Double, nullable=True)
+    flowy_account_number = Column(Integer, nullable=True)
+    email = Column(String(200), unique=True, nullable=True)
+    phone_number = Column(String(10), unique=True, nullable=False)
+    password = Column(String(100), nullable=False)
     created_at = Column(
         TIMESTAMP(timezone=True), server_default=text("now()"), nullable=False
     )
     
     
-class UserBankAccounts(Base):
-    __tablename__ = "user_bank_accounts"
+class BankAccounts(Base):
+    __tablename__ = "bank_accounts"
     
     id = Column(Integer, index=True, autoincrement=True, primary_key=True, nullable=False)
-    bank = Column(String, nullable=False)
-    full_name = Column(String, nullable=False)
+    user_id = Column(Integer, nullable=False)
+    bank = Column(String(50), nullable=False)
+    full_name = Column(String(100), nullable=False)
     account_number = Column(Integer, nullable=False)
     
     
-class SavedAccounts(Base):
-    __tablename__ = "saved_accounts"
+class Accounts(Base):
+    __tablename__ = "accounts"
     
     id = Column(Integer, index=True, autoincrement=True, primary_key=True, nullable=False)
-    name = Column(String, nullable=False)
+    user_id = Column(Integer, nullable=False)
+    name = Column(String(50), nullable=False)
     account_number = Column(Integer, nullable=False)
     
     
-class DeveloperProject(Base):
-    __tablename__ = "project"
+class Project(Base):
+    __tablename__ = "projects"
     
     id = Column(Integer, primary_key=True, index=True, autoincrement=True, nullable=False)
     name = Column(String(50), nullable=False)
     description = Column(String(500), nullable=False)
     website_link = Column(String(200), nullable=True)
     fee_on_customer = Column(Boolean, nullable=False, default=True)
-    api_key = Column(String, nullable=False)
-    user_id = Column(String, nullable=False)
+    api_key = Column(String(20), nullable=False)
+    user_id = Column(Integer, nullable=False)
     status = Column(Boolean, nullable=False, default=False)
     created_at = Column(TIMESTAMP(timezone=True), server_default=text("now()"), nullable=False)
 
 
 class Transfer(Base):
-    __tablename__ = "transfer"
+    __tablename__ = "transfers"
     id = Column(
         Integer, primary_key=True, index=True, autoincrement=True, nullable=False
     )
-    sender_id = None
-    reciver_id = None
+    sender_id = Column(Integer, nullable=False)
+    reciver_id = Column(Integer, nullable=False)
     amount = Column(Double, nullable=False)
     tx_ref = Column(String(20), nullable=False)
     fee = Column(Double, nullable=False)
@@ -68,21 +71,22 @@ class Transfer(Base):
 
 
 class Payment(Base):
-    __tablename__ = "payment"
+    __tablename__ = "payments"
 
     id = Column(
         Integer, primary_key=True, index=True, autoincrement=True, nullable=False
     )
     payer_id = Column(Integer, nullable=False)
     developer_id = Column(Integer, nullable=False)
-    fee = Column(Double, nullable=False)
-    date_time = Column(TIMESTAMP(timezone=True), server_default=text("now()"), nullable=False)
     amount = Column(Double, nullable=False)
+    fee = Column(Double, nullable=False)
     tx_ref = Column(String(20), nullable=False)
+    status = Column(Boolean, nullable=True)
+    date_time = Column(TIMESTAMP(timezone=True), server_default=text("now()"), nullable=False)
 
 
 class Deposit(Base):
-    __tablename__ = "deposite"
+    __tablename__ = "deposits"
 
     id = Column(
         Integer, primary_key=True, index=True, autoincrement=True, nullable=False
@@ -98,7 +102,7 @@ class Deposit(Base):
 
 
 class Withdrawal(Base):
-    __tablename__ = "withdrawal"
+    __tablename__ = "withdrawals"
 
     id = Column(
         Integer, primary_key=True, index=True, autoincrement=True, nullable=False

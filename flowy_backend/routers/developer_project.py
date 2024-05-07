@@ -9,7 +9,7 @@ router = APIRouter(prefix="/project", tags=["Project"])
 
 
 @router.post("/create")
-def create_project(user: schemas.DeveloperProject):
+def create_project(user: schemas.Project):
     return {"status": "200"}
 
 

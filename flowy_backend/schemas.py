@@ -1,23 +1,48 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from typing import Optional
 import datetime
 
 
-class User(BaseModel):
-    id: Optional[str] = None  
+class Login(BaseModel):
+    phone_number: str
+    password: str
+    
+    class Config:
+        from_attributes = True
+
+
+class UserBase(BaseModel):
+    f_name: str
+    l_name: str
+    email: EmailStr
+    phone_number: str
+    
+    class Config:
+        from_attributes = True
+        
+        
+class User(UserBase):
+    id: str
+    balance: Optional[float] = None
+    flowy_account_number: Optional[int] = None
+    password: str
+    created_at: datetime.datetime
+    
+    class Config:
+        from_attributes = True
+        
+        
+class UserResponse(BaseModel):
     f_name: str
     l_name: str
     balance: float
     flowy_account_number: int
-    phone_number: int
-    password: str
-    date_time: datetime.datetime
     
     class Config:
         from_attributes = True
         
          
-class UserBankAccounts(BaseModel):
+class BankAccounts(BaseModel):
     id: Optional[str] = None  
     bank: str
     full_name: str
@@ -27,7 +52,7 @@ class UserBankAccounts(BaseModel):
         from_attributes = True
         
         
-class SavedAccounts(BaseModel):
+class Accounts(BaseModel):
     id: Optional[str] = None  
     name: str
     account_number: int
@@ -36,7 +61,7 @@ class SavedAccounts(BaseModel):
         from_attributes = True
         
         
-class DeveloperProject(BaseModel):
+class Project(BaseModel):
     id: Optional[str] = None  
     name: str
     description: str
@@ -68,9 +93,10 @@ class Payment(BaseModel):
     id: Optional[str] = None  
     payer_id: int
     developer_id: int
-    amount: float
     fee: float
+    amount: float
     tx_ref: str
+    status: Optional[bool] = None
     date_time: datetime.datetime
     
     class Config:

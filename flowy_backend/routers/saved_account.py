@@ -9,7 +9,7 @@ router = APIRouter(prefix="/saved", tags=["SavedAccounts"])
 
 
 @router.post("/create")
-def create_account(user: schemas.SavedAccounts):
+def create_account(user: schemas.Accounts):
     return {"status": "200"}
 
 
