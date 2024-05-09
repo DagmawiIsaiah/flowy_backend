@@ -26,17 +26,24 @@ class BankAccounts(Base):
     __tablename__ = "bank_accounts"
     
     id = Column(Integer, index=True, autoincrement=True, primary_key=True, nullable=False)
-    user_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     bank = Column(String(50), nullable=False)
     full_name = Column(String(100), nullable=False)
     account_number = Column(Integer, nullable=False)
+    
+    
+class Bank(Base):
+    __tablename__ = "bank"
+    
+    id = Column(Integer, index=True, autoincrement=True, primary_key=True, nullable=False)
+    bank = Column(String(50), nullable=False)
     
     
 class Accounts(Base):
     __tablename__ = "accounts"
     
     id = Column(Integer, index=True, autoincrement=True, primary_key=True, nullable=False)
-    user_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     name = Column(String(50), nullable=False)
     account_number = Column(Integer, nullable=False)
     
@@ -50,7 +57,7 @@ class Project(Base):
     website_link = Column(String(200), nullable=True)
     fee_on_customer = Column(Boolean, nullable=False, default=True)
     api_key = Column(String(20), nullable=False)
-    user_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     status = Column(Boolean, nullable=False, default=False)
     created_at = Column(TIMESTAMP(timezone=True), server_default=text("now()"), nullable=False)
 
@@ -60,8 +67,8 @@ class Transfer(Base):
     id = Column(
         Integer, primary_key=True, index=True, autoincrement=True, nullable=False
     )
-    sender_id = Column(Integer, nullable=False)
-    reciver_id = Column(Integer, nullable=False)
+    sender_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    reciver_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     amount = Column(Double, nullable=False)
     tx_ref = Column(String(20), nullable=False)
     fee = Column(Double, nullable=False)
@@ -76,7 +83,7 @@ class Payment(Base):
     id = Column(
         Integer, primary_key=True, index=True, autoincrement=True, nullable=False
     )
-    payer_id = Column(Integer, nullable=False)
+    payer_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     developer_id = Column(Integer, nullable=False)
     amount = Column(Double, nullable=False)
     fee = Column(Double, nullable=False)
@@ -91,7 +98,7 @@ class Deposit(Base):
     id = Column(
         Integer, primary_key=True, index=True, autoincrement=True, nullable=False
     )
-    user_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     full_name = Column(String(50), nullable=False)
     account_number = Column(Integer, nullable=False)
     target_account = Column(Integer, nullable=False)
@@ -107,7 +114,7 @@ class Withdrawal(Base):
     id = Column(
         Integer, primary_key=True, index=True, autoincrement=True, nullable=False
     )
-    user_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     account_number = Column(Integer, nullable=False)
     bank_name = Column(String(50), nullable=False)
     date_time = Column(TIMESTAMP(timezone=True), server_default=text("now()"), nullable=False)

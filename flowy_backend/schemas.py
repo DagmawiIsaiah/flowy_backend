@@ -11,6 +11,15 @@ class Login(BaseModel):
         from_attributes = True
 
 
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    id: Optional[int] = None
+
+
 class UserBase(BaseModel):
     f_name: str
     l_name: str
@@ -52,8 +61,17 @@ class BankAccounts(BaseModel):
         from_attributes = True
         
         
-class Accounts(BaseModel):
+class Bank(BaseModel):
     id: Optional[str] = None  
+    name: str
+    
+    class Config:
+        from_attributes = True
+        
+        
+class Accounts(BaseModel):
+    id: Optional[str] = None
+    user_id: int
     name: str
     account_number: int
     
@@ -105,10 +123,10 @@ class Payment(BaseModel):
         
 class Deposit(BaseModel):
     id: Optional[str] = None  
-    user_id: int
+    user_id: Optional[int] = None
     full_name: str
     account_number: int
-    target_account_number: int
+    target_account: int
     amount: float
     tx_ref: str
     status: bool

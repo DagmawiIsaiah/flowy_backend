@@ -2,7 +2,7 @@ from fastapi import Depends, HTTPException, Response, status, APIRouter
 from sqlalchemy.orm import Session
 
 from .. import models, schemas
-# from ..database import SessionLocal, get_db
+from ..database import get_db
 
 
 router = APIRouter(prefix="/project", tags=["Project"])
