@@ -14,15 +14,16 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Access the environment variables
-db_host = os.getenv("DB_HOST")
-db_user = os.getenv("DB_USER")
-db_password = os.getenv("DB_PASSWORD")
-db_name = os.getenv("DB_NAME")
+db_host = os.getenv("DB_HOST_PROD")
+db_user = os.getenv("DB_USER_PROD")
+db_password = os.getenv("DB_PASSWORD_PROD")
+db_name = os.getenv("DB_NAME_PROD")
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-config.set_main_option("sqlalchemy.url", f"mysql+pymysql://{db_user}:{db_password}@{db_host}/{db_name}")
+# config.set_main_option("sqlalchemy.url", f"mysql+pymysql://{db_user}:{db_password}@{db_host}/{db_name}")
+config.set_main_option("sqlalchemy.url", "mysql+pymysql://sql8706104:crmly5my5J@sql8.freemysqlhosting.net:3306/sql8706104")
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

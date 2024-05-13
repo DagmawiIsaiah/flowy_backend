@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException, Response, status, APIRouter
+from fastapi import Depends, HTTPException, status, APIRouter
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext

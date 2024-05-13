@@ -69,16 +69,6 @@ class Bank(BaseModel):
         from_attributes = True
         
         
-class Accounts(BaseModel):
-    id: Optional[str] = None
-    user_id: int
-    name: str
-    account_number: int
-    
-    class Config:
-        from_attributes = True
-        
-        
 class Project(BaseModel):
     id: Optional[str] = None  
     name: str
